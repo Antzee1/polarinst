@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>NORSK POLARINSTITUTT</title>
+  <link href="./resources/css/reset.css" type="text/css" rel="stylesheet">
+  <link href="./resources/css/styles.css" type="text/css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=ABeeZee&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+
+  <div id="outer-wrapper">
+
+    <form id="search-wrapper">
+
+      <!-- ➡️ ➡️ ➡️ FRITEKST-SØK ADVANCED - AUTHOR, TITLE, JOURNAL, ABSTRACT ⬅️ ⬅️ ⬅️ -->
+      <br>
+      <h6>QUICK SEARCH</h6>
+      <h5><input type="text" placeholder="" class="searchInput" id="all" oninput="quickSearch(this)" /></h5>
+      <br>
+      <h6>ADVANCED SEARCH</h6>
+      <br>
+      <h6>Search Author</h6>
+      <input type="text" placeholder="" class="searchInput" id="author" oninput="advancedSearch()" />
+      <h6>Search Title</h6>
+      <input type="text" placeholder="" class="searchInput" id="title" oninput="advancedSearch()" />
+      <h6>Search Journal</h6>
+      <input type="text" placeholder="" class="searchInput" id="journal" oninput="advancedSearch()" />
+      <h6>Search Abstract</h6>
+      <input type="text" placeholder="" class="searchInput" id="abstract" oninput="advancedSearch()" />
+
+      <!-- ➡️ ➡️ ➡️ NEDTREKKSMENYAR ⬅️ ⬅️ ⬅️ -->
+
+      <h6>Keyword</h6>
+      <select list="dropdown-list" id="dropdownmenu-keyword" name="dropdownmenu-keyword" onchange="advancedSearch()" class="form-control"></select>
+      <h6>Publication Type</h6>
+      <select list="dropdownlist-type" id="dropdownmenu-type" name="dropdownmenu-type" onchange="advancedSearch()" class="form-control"></select>
+      <div id="dropdownyear-wrappers">
+        <div class="dropdownyear-wrapper">
+          <h6>From year</h6>
+          <select list="dropdownlist-fromyear" id="dropdownmenu-fromyear" name="dropdownmenu-fromyear" onchange="advancedSearch()" class="form-control"></select>
+        </div>
+        <div class="dropdownyear-wrapper">
+          <h6>To year</h6>
+          <select list="dropdownlist-toyear" id="dropdownmenu-toyear" name="dropdownmenu-toyear" onchange="advancedSearch()" class="form-control"></select>
+        </div>
+      </div>
+
+      <!-- ➡️ ➡️ ➡️ RESET BUTTON ⬅️ ⬅️ ⬅️ -->
+
+      <input type="button" onclick="resetSearch()" id="reset-button" value="RESET ALL"></input>
+
+    </form>
+
+    <div id="table-wrapper">
+      <!-- table gets added here with D3.js -->
+    </div>
+
+  </div>
+
+  <script type="text/javascript" src="resources/js/d3.js"></script>
+  <script type="text/javascript" src="resources/js/main.js"></script>
+</body>
+
+
+</html>
