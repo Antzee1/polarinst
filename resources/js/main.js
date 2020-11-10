@@ -1,3 +1,18 @@
+/*
+
+✅ line height
+
+✅ remove border on left side of first column because there's a border around the table as well.
+
+next:
+
+invisible table
+
+print / export functionality
+
+
+*/
+
 
 // ======================================================================================================================
 // ======================================================================================================================
@@ -393,7 +408,7 @@ async function getData() {
 
   buildDropDownMenus(dataset);
 
-  bookTable(dataset, ["Title", "Abstract","Title_Abstract", "Type", "Record", "Author", "Year", "Journal", "Series", "Published", "Volume", "Pages", "Date", "Keywords", "Language", "Notes"])
+  bookTable(dataset, ["Title", "Abstract", "Title_Abstract", "Type", "Record", "Author", "Year", "Journal", "Series", "Published", "Volume", "Pages", "Date", "Keywords", "Language", "Notes"])
 
 }
 

@@ -123,7 +123,8 @@ input[type=text] {
 }
 
 table {
-  /* border-spacing: 0; */
+  border-collapse: collapse;
+  width: 100%;
   font-family: "ABeeZee", sans-serif;
 }
 
@@ -149,18 +150,22 @@ th {
   top: 0;
 }
 
-table {
-  border-collapse: collapse;
-  width: 100%;
-}
-
 th {
   cursor: pointer;
 }
 
+td:nth-child(3) {
+  border-left: none;
+}
+
+td:nth-child(16) {
+  border-right: none;
+}
+
 td {
-  font-size: 0.8rem;
   text-align: left;
+  font-size: 0.8rem;
+  line-height: 1.2;
   color: hsl(200, 100%, 13%);
   background: hsl(30, 80%, 99%);
   padding: 0.2rem 0.2rem 0.5rem 0.2rem;
