@@ -1,13 +1,4 @@
 
-/*
-
-// DROPDOWN MENUS 
-  if (dropdownFromYear.innerHTML = "") {
-      // don't display the row ?
-}
-
-*/
-
 // ======================================================================================================================
 // ======================================================================================================================
 
@@ -18,10 +9,11 @@
 
 function bookTable(dataset, columns) {
 
+  let titleandabstractAscending = true
   let authorAscending = true
-  let titleAscending = true
+  // let titleAscending = true
   let journalAscending = true
-  let abstractAscending = true
+  // let abstractAscending = true
   let typeAscending = true
   let yearAscending = true
 
@@ -36,98 +28,23 @@ function bookTable(dataset, columns) {
     .data(columns)
     .enter()
     .append("th")
-
-    // old
-    // .text(function(column) {
-    //   return column
-    // })
-    //new
+    .attr("class", (column) =>
+      column.toLowerCase()
+    )
     .text((column) => column)
-
-    // .on("click", function(d) { // sortere kolonner ascending/descending
-    //
-    //   if (d == "Author") {
-    //     if (authorAscending) {
-    //       sortFunction = function(a, b) {
-    //         return a.Author.localeCompare(b.Author)
-    //       }
-    //       authorAscending = !authorAscending
-    //     } else {
-    //       sortFunction = function(a, b) {
-    //         return b.Author.localeCompare(a.Author)
-    //       }
-    //       authorAscending = !authorAscending
-    //     }
-    //   }
-    //   if (d == "Title") {
-    //     if (titleAscending) {
-    //       sortFunction = function(a, b) {
-    //         return a.Title.localeCompare(b.Title)
-    //       }
-    //       titleAscending = !titleAscending
-    //     } else {
-    //       sortFunction = function(a, b) {
-    //         return b.Title.localeCompare(a.Title)
-    //       }
-    //       titleAscending = !titleAscending
-    //     }
-    //   }
-    //   if (d == "Journal") {
-    //     if (journalAscending) {
-    //       sortFunction = function(a, b) {
-    //         return a.Journal.localeCompare(b.Journal)
-    //       }
-    //       journalAscending = !journalAscending
-    //     } else {
-    //       sortFunction = function(a, b) {
-    //         return b.Journal.localeCompare(a.Journal)
-    //       }
-    //       journalAscending = !journalAscending
-    //     }
-    //   }
-    //   if (d == "Abstract") {
-    //     if (abstractAscending) {
-    //       sortFunction = function(a, b) {
-    //         return a.Abstract.localeCompare(b.Abstract)
-    //       }
-    //       abstractAscending = !abstractAscending
-    //     } else {
-    //       sortFunction = function(a, b) {
-    //         return b.Abstract.localeCompare(a.Abstract)
-    //       }
-    //       abstractAscending = !abstractAscending
-    //     }
-    //   }
-    //   if (d == "Type") {
-    //     if (typeAscending) {
-    //       sortFunction = function(a, b) {
-    //         return a.Type.localeCompare(b.Type)
-    //       }
-    //       typeAscending = !typeAscending
-    //     } else {
-    //       sortFunction = function(a, b) {
-    //         return b.Type.localeCompare(a.Type)
-    //       }
-    //       typeAscending = !typeAscending
-    //     }
-    //   }
-    //   if (d == "Year") {
-    //     if (yearAscending) {
-    //       sortFunction = function(a, b) {
-    //         return a.Year.localeCompare(b.Year)
-    //       }
-    //       yearAscending = !yearAscending
-    //     } else {
-    //       sortFunction = function(a, b) {
-    //         return b.Year.localeCompare(a.Year)
-    //       }
-    //       yearAscending = !yearAscending
-    //     }
-    //   }
-    //   rows.sort(sortFunction)
-    // })
-
     .on("click", function(d) { // sortere kolonner ascending/descending
+
+      // sorting on Title column (which is set to hidden) because if we sort on TitleandAbstract, the sorting
+      // will be done in three bulks because of the construction of TitleandAbstract in the getData function
+      if (d == "Title_Abstract") {
+        if (titleandabstractAscending) {
+          sortFunction = (a, b) => a.Title.localeCompare(b.Title)
+          titleandabstractAscending = !titleandabstractAscending
+        } else {
+          sortFunction = (a, b) => b.Title.localeCompare(a.Title)
+          titleandabstractAscending = !titleandabstractAscending
+        }
+      }
 
       if (d == "Author") {
         if (authorAscending) {
@@ -138,15 +55,6 @@ function bookTable(dataset, columns) {
           authorAscending = !authorAscending
         }
       }
-      if (d == "Title") {
-        if (titleAscending) {
-          sortFunction = (a, b) => a.Title.localeCompare(b.Title)
-          titleAscending = !titleAscending
-        } else {
-          sortFunction = (a, b) => b.Title.localeCompare(a.Title)
-          titleAscending = !titleAscending
-        }
-      }
       if (d == "Journal") {
         if (journalAscending) {
           sortFunction = (a, b) => a.Journal.localeCompare(b.Journal)
@@ -154,15 +62,6 @@ function bookTable(dataset, columns) {
         } else {
           sortFunction = (a, b) => b.Journal.localeCompare(a.Journal)
           journalAscending = !journalAscending
-        }
-      }
-      if (d == "Abstract") {
-        if (abstractAscending) {
-          sortFunction = (a, b) => a.Abstract.localeCompare(b.Abstract)
-          abstractAscending = !abstractAscending
-        } else {
-          sortFunction = (a, b) => b.Abstract.localeCompare(a.Abstract)
-          abstractAscending = !abstractAscending
         }
       }
       if (d == "Type") {
@@ -185,7 +84,6 @@ function bookTable(dataset, columns) {
       }
       rows.sort(sortFunction)
     })
-
 
   // create a row for each object in the data
   const rows = tbody.selectAll("tr")
@@ -483,9 +381,34 @@ async function getData() {
 
   const dataset = await d3.dsv(";", "./data/POLAR-2.csv")
 
+  dataset.forEach(function(d) {
+    className = 'showAbstractLink'
+    if (d.Abstract == ""){
+
+      className = ''
+    }
+    d.Title_Abstract = "<p class=" + className + " onclick='expandAbstract(this)'>" + d.Title + "</p> "+ "<p  class='abstractcontent' style='display: none;'>" + d.Abstract + "</p>"
+
+  })
+
   buildDropDownMenus(dataset);
-  bookTable(dataset, ["Type", "Record", "Author", "Year", "Journal", "Title", "Series", "Published", "Volume", "Pages", "Date", "ShortTitle", "Label", "Keywords", "Abstract", "Language", "Notes"])
+
+  bookTable(dataset, ["Title", "Abstract","Title_Abstract", "Type", "Record", "Author", "Year", "Journal", "Series", "Published", "Volume", "Pages", "Date", "Keywords", "Language", "Notes"])
 
 }
 
 getData()
+
+
+function expandAbstract(element){
+  console.log(element.nextElementSibling.style.display);
+  if (element.nextElementSibling.style.display == "")
+  {
+    element.nextElementSibling.style.display = "none";
+  } else {
+    element.nextElementSibling.style.display = "";
+  }
+  console.log(element.nextElementSibling.style.display);
+
+
+}
