@@ -1,6 +1,12 @@
+
 /*
 
- */
+// DROPDOWN MENUS 
+  if (dropdownFromYear.innerHTML = "") {
+      // don't display the row ?
+}
+
+*/
 
 // ======================================================================================================================
 // ======================================================================================================================
@@ -30,91 +36,156 @@ function bookTable(dataset, columns) {
     .data(columns)
     .enter()
     .append("th")
-    .text(function(column) {
-      return column
-    })
+
+    // old
+    // .text(function(column) {
+    //   return column
+    // })
+    //new
+    .text((column) => column)
+
+    // .on("click", function(d) { // sortere kolonner ascending/descending
+    //
+    //   if (d == "Author") {
+    //     if (authorAscending) {
+    //       sortFunction = function(a, b) {
+    //         return a.Author.localeCompare(b.Author)
+    //       }
+    //       authorAscending = !authorAscending
+    //     } else {
+    //       sortFunction = function(a, b) {
+    //         return b.Author.localeCompare(a.Author)
+    //       }
+    //       authorAscending = !authorAscending
+    //     }
+    //   }
+    //   if (d == "Title") {
+    //     if (titleAscending) {
+    //       sortFunction = function(a, b) {
+    //         return a.Title.localeCompare(b.Title)
+    //       }
+    //       titleAscending = !titleAscending
+    //     } else {
+    //       sortFunction = function(a, b) {
+    //         return b.Title.localeCompare(a.Title)
+    //       }
+    //       titleAscending = !titleAscending
+    //     }
+    //   }
+    //   if (d == "Journal") {
+    //     if (journalAscending) {
+    //       sortFunction = function(a, b) {
+    //         return a.Journal.localeCompare(b.Journal)
+    //       }
+    //       journalAscending = !journalAscending
+    //     } else {
+    //       sortFunction = function(a, b) {
+    //         return b.Journal.localeCompare(a.Journal)
+    //       }
+    //       journalAscending = !journalAscending
+    //     }
+    //   }
+    //   if (d == "Abstract") {
+    //     if (abstractAscending) {
+    //       sortFunction = function(a, b) {
+    //         return a.Abstract.localeCompare(b.Abstract)
+    //       }
+    //       abstractAscending = !abstractAscending
+    //     } else {
+    //       sortFunction = function(a, b) {
+    //         return b.Abstract.localeCompare(a.Abstract)
+    //       }
+    //       abstractAscending = !abstractAscending
+    //     }
+    //   }
+    //   if (d == "Type") {
+    //     if (typeAscending) {
+    //       sortFunction = function(a, b) {
+    //         return a.Type.localeCompare(b.Type)
+    //       }
+    //       typeAscending = !typeAscending
+    //     } else {
+    //       sortFunction = function(a, b) {
+    //         return b.Type.localeCompare(a.Type)
+    //       }
+    //       typeAscending = !typeAscending
+    //     }
+    //   }
+    //   if (d == "Year") {
+    //     if (yearAscending) {
+    //       sortFunction = function(a, b) {
+    //         return a.Year.localeCompare(b.Year)
+    //       }
+    //       yearAscending = !yearAscending
+    //     } else {
+    //       sortFunction = function(a, b) {
+    //         return b.Year.localeCompare(a.Year)
+    //       }
+    //       yearAscending = !yearAscending
+    //     }
+    //   }
+    //   rows.sort(sortFunction)
+    // })
+
     .on("click", function(d) { // sortere kolonner ascending/descending
 
       if (d == "Author") {
         if (authorAscending) {
-          sortFunction = function(a, b) {
-            return a.Author.localeCompare(b.Author)
-          }
+          sortFunction = (a, b) => a.Author.localeCompare(b.Author)
           authorAscending = !authorAscending
         } else {
-          sortFunction = function(a, b) {
-            return b.Author.localeCompare(a.Author)
-          }
+          sortFunction = (a, b) => b.Author.localeCompare(a.Author)
           authorAscending = !authorAscending
         }
       }
       if (d == "Title") {
         if (titleAscending) {
-          sortFunction = function(a, b) {
-            return a.Title.localeCompare(b.Title)
-          }
+          sortFunction = (a, b) => a.Title.localeCompare(b.Title)
           titleAscending = !titleAscending
         } else {
-          sortFunction = function(a, b) {
-            return b.Title.localeCompare(a.Title)
-          }
+          sortFunction = (a, b) => b.Title.localeCompare(a.Title)
           titleAscending = !titleAscending
         }
       }
       if (d == "Journal") {
         if (journalAscending) {
-          sortFunction = function(a, b) {
-            return a.Journal.localeCompare(b.Journal)
-          }
+          sortFunction = (a, b) => a.Journal.localeCompare(b.Journal)
           journalAscending = !journalAscending
         } else {
-          sortFunction = function(a, b) {
-            return b.Journal.localeCompare(a.Journal)
-          }
+          sortFunction = (a, b) => b.Journal.localeCompare(a.Journal)
           journalAscending = !journalAscending
         }
       }
       if (d == "Abstract") {
         if (abstractAscending) {
-          sortFunction = function(a, b) {
-            return a.Abstract.localeCompare(b.Abstract)
-          }
+          sortFunction = (a, b) => a.Abstract.localeCompare(b.Abstract)
           abstractAscending = !abstractAscending
         } else {
-          sortFunction = function(a, b) {
-            return b.Abstract.localeCompare(a.Abstract)
-          }
+          sortFunction = (a, b) => b.Abstract.localeCompare(a.Abstract)
           abstractAscending = !abstractAscending
         }
       }
       if (d == "Type") {
         if (typeAscending) {
-          sortFunction = function(a, b) {
-            return a.Type.localeCompare(b.Type)
-          }
+          sortFunction = (a, b) => a.Type.localeCompare(b.Type)
           typeAscending = !typeAscending
         } else {
-          sortFunction = function(a, b) {
-            return b.Type.localeCompare(a.Type)
-          }
+          sortFunction = (a, b) => b.Type.localeCompare(a.Type)
           typeAscending = !typeAscending
         }
       }
       if (d == "Year") {
         if (yearAscending) {
-          sortFunction = function(a, b) {
-            return a.Year.localeCompare(b.Year)
-          }
+          sortFunction = (a, b) => a.Year.localeCompare(b.Year)
           yearAscending = !yearAscending
         } else {
-          sortFunction = function(a, b) {
-            return b.Year.localeCompare(a.Year)
-          }
+          sortFunction = (a, b) => b.Year.localeCompare(a.Year)
           yearAscending = !yearAscending
         }
       }
       rows.sort(sortFunction)
     })
+
 
   // create a row for each object in the data
   const rows = tbody.selectAll("tr")
@@ -124,6 +195,7 @@ function bookTable(dataset, columns) {
 
   // create a cell in each row for each column
   const cells = rows.selectAll("td")
+
     .data(function(row) {
       return columns.map(function(column) {
         return {
@@ -132,14 +204,15 @@ function bookTable(dataset, columns) {
         }
       })
     })
+
     .enter()
     .append("td")
-    .attr("class", function(d) {
-      return d.column.toLowerCase()
-    })
-    .html(function(d) {
-      return d.value
-    })
+    .attr("class", (d) =>
+      d.column.toLowerCase()
+    )
+    .html((d) =>
+      d.value
+    )
 
   return table
 }
@@ -313,17 +386,29 @@ function buildDropDownMenus(dataset) {
   })
 
   // fjerne whitespace
-  for (var i = 0; i < concatArraysKeywords.length; i++) {
+  for (let i = 0; i < concatArraysKeywords.length; i++) {
     concatArraysKeywords[i] = concatArraysKeywords[i].trim()
   }
   // sortere alfabetisk
-  let uniqueValues = [...new Set(concatArraysKeywords)].sort();
-  let optionsKeywords = "<option value='' hidden>--select--</option>";
-  for (let i = 0; i < uniqueValues.length; i++) {
-    optionsKeywords += "<option value='" + uniqueValues[i] + "'>" + uniqueValues[i] + "</option>";
+  const uniqueValues = [...new Set(concatArraysKeywords)].sort()
+  let optionsKeywords = "<option value='' hidden>--select--</option>"
+
+
+  // for (let i = 0; i < uniqueValues.length; i++) {
+  //   optionsKeywords += "<option value='" + uniqueValues[i] + "'>" + uniqueValues[i] + "</option>";
+  // }
+  // for-of constr
+  // for (const uniqueValue of uniqueValues) {
+  //   optionsKeywords += "<option value='" + uniqueValue + "'>" + uniqueValue + "</option>"
+  // }
+  // same but with new string concatenation
+  for (const uniqueValue of uniqueValues) {
+    optionsKeywords += `<option value='${uniqueValue}'>${uniqueValue}</option>`
   }
+
+
   const dropdownKeyword = document.getElementById("dropdownmenu-keyword")
-  dropdownKeyword.innerHTML = optionsKeywords;
+  dropdownKeyword.innerHTML = optionsKeywords
 
 
   // ======================================================================================================================
@@ -335,10 +420,13 @@ function buildDropDownMenus(dataset) {
   for (let i = 0; i < concatArraysType.length; i++) {
     concatArraysType[i] = concatArraysType[i].trim()
   }
-  let uniqueValuesType = [...new Set(concatArraysType)].sort();
+  const uniqueValuesType = [...new Set(concatArraysType)].sort();
   let optionsType = "<option value='' hidden>--select--</option>";
-  for (let i = 0; i < uniqueValuesType.length; i++) {
-    optionsType += "<option value='" + uniqueValuesType[i] + "'>" + uniqueValuesType[i] + "</option>";
+  // for (let i = 0; i < uniqueValuesType.length; i++) {
+  //   optionsType += "<option value='" + uniqueValuesType[i] + "'>" + uniqueValuesType[i] + "</option>";
+  // }
+  for (const uniqueValueType of uniqueValuesType) {
+    optionsType += `<option value='${uniqueValueType}'>${uniqueValueType}</option>`
   }
   const dropdownType = document.getElementById("dropdownmenu-type")
   dropdownType.innerHTML = optionsType;
@@ -355,12 +443,14 @@ function buildDropDownMenus(dataset) {
   }
   let uniqueValuesFromYear = [...new Set(concatArraysYear)].sort();
   let optionsFromYear = "<option value='' hidden>--select--</option>";
-  for (let i = 0; i < uniqueValuesFromYear.length; i++) {
-    optionsFromYear += "<option value='" + uniqueValuesFromYear[i] + "'>" + uniqueValuesFromYear[i] + "</option>";
+  // for (let i = 0; i < uniqueValuesFromYear.length; i++) {
+  //   optionsFromYear += "<option value='" + uniqueValuesFromYear[i] + "'>" + uniqueValuesFromYear[i] + "</option>";
+  // }
+  for (const uniqueValueFromYear of uniqueValuesFromYear) {
+    optionsFromYear += `<option value='${uniqueValueFromYear}'>${uniqueValueFromYear}</option>`
   }
   const dropdownFromYear = document.getElementById("dropdownmenu-fromyear")
   dropdownFromYear.innerHTML = optionsFromYear;
-
 
   // ======================================================================================================================
 
@@ -370,8 +460,11 @@ function buildDropDownMenus(dataset) {
 
   let uniqueValuesToYear = [...new Set(concatArraysYear)].sort()
   let optionsToYear = "<option value='' hidden>--select--</option>"
-  for (let i = 0; i < uniqueValuesToYear.length; i++) {
-    optionsToYear += "<option value='" + uniqueValuesToYear[i] + "'>" + uniqueValuesToYear[i] + "</option>"
+  // for (let i = 0; i < uniqueValuesToYear.length; i++) {
+  //   optionsToYear += "<option value='" + uniqueValuesToYear[i] + "'>" + uniqueValuesToYear[i] + "</option>"
+  // }
+  for (const uniqueValueToYear of uniqueValuesToYear) {
+    optionsToYear += `<option value='${uniqueValueToYear}'>${uniqueValueToYear}</option>`
   }
   const dropdownToYear = document.getElementById("dropdownmenu-toyear")
   dropdownToYear.innerHTML = optionsToYear
