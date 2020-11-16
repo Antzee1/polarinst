@@ -1,18 +1,7 @@
 /*
 
-✅ line height
-
-✅ remove border on left side of first column because there's a border around the table as well.
-
-next:
-
-invisible table
-
-print / export functionality
-
 
 */
-
 
 // ======================================================================================================================
 // ======================================================================================================================
@@ -21,6 +10,13 @@ print / export functionality
 
 // ======================================================================================================================
 // ======================================================================================================================
+
+// add ▼▲ to sortable column headers
+
+// https://stackoverflow.com/questions/15121690/d3-seems-to-assume-i-know-the-column-names-of-a-csv
+
+const columnTable = ["select", "Title", "Abstract", "Type", "Author", "Year", "Title_Abstract", "Journal", "Series", "Published", "Volume", "Pages", "Date", "Keywords", "Language", "Notes"]
+const printColumns = ["Title", "Abstract", "Type", "Record", "Author", "Year", "Journal", "Series", "Published", "Volume", "Pages", "Date", "Keywords", "Language", "Notes"]
 
 function bookTable(dataset, columns) {
 
@@ -36,6 +32,7 @@ function bookTable(dataset, columns) {
     .append("table")
     .attr("class", "book-table")
     .attr("id", "book-table")
+    // .attr("style", (d) => "display: none;") //Ketil: make complete table invisible
   thead = table.append("thead")
   tbody = table.append("tbody")
   thead.append("tr")
@@ -46,7 +43,12 @@ function bookTable(dataset, columns) {
     .attr("class", (column) =>
       column.toLowerCase()
     )
-    .text((column) => column)
+    .text((column) => column
+
+
+
+
+  )
     .on("click", function(d) { // sortere kolonner ascending/descending
 
       // sorting on Title column (which is set to hidden) because if we sort on TitleandAbstract, the sorting
@@ -117,7 +119,6 @@ function bookTable(dataset, columns) {
         }
       })
     })
-
     .enter()
     .append("td")
     .attr("class", (d) =>
@@ -130,6 +131,48 @@ function bookTable(dataset, columns) {
   return table
 }
 
+
+// ======================================================================================================================
+// ======================================================================================================================
+
+// ➡️ ➡️ ➡️ PRINT SELECTED ⬅️ ⬅️ ⬅️
+
+// ======================================================================================================================
+// ======================================================================================================================
+
+
+function printTable() {
+  // var printwin = window.open('', 'PRINT', 'height=400,width=600');
+  var printwin = window.open();
+  printwin.document.write('<html><head><title>' + document.title + '</title>');
+  printwin.document.write('</head><body>');
+
+  //const table = document.getElementById("book-table").innerHTML;
+
+  const checkBoxes = document.getElementsByClassName("checkbox");
+
+  [].forEach.call(checkBoxes, function(box) {
+    if (box.checked) {
+      const row = box.parentElement.parentElement;
+      printwin.document.write("<div style='margin-bottom:25px' >");
+      [].forEach.call(row.cells, function(cell) {
+        var className = cell.getAttribute("class").toLowerCase()
+        className = className.charAt(0).toUpperCase() + className.slice(1);
+        if (printColumns.includes(className)) {
+          printwin.document.write("<p style='margin-bottom:0; margin-top:0;' ><b>" + className + ":</b>" + cell.textContent + "</p>");
+        }
+      })
+      printwin.document.write("</div>")
+    }
+  })
+  printwin.document.write('</body></html>');
+
+  printwin.stop();
+  printwin.print();
+  printwin.close();
+}
+
+
 // ======================================================================================================================
 // ======================================================================================================================
 
@@ -141,19 +184,29 @@ function bookTable(dataset, columns) {
 function quickSearch(searchEntry) {
   const tables = document.getElementsByClassName("book-table")
   const searchValueNormalized = searchEntry.value.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+  const split = searchValueNormalized.split(" ");
+  console.log(split);
+  let foundElements = 0;
 
   [].forEach.call(tables, function(table) {
     [].forEach.call(table.tBodies, function(tbody) {
       [].forEach.call(tbody.rows, function(row) {
         if (row.textContent.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").indexOf(searchValueNormalized) > -1) {
           row.style.display = ""
+          foundElements = foundElements + 1;
         } else {
           row.style.display = "none"
         }
       })
     })
   })
+  const table = document.getElementById("book-table");
+  table.style.display = ""
+
+  document.getElementById("entries").innerHTML = "Table entries: " + foundElements
+
 }
+
 
 // ======================================================================================================================
 // ======================================================================================================================
@@ -163,7 +216,9 @@ function quickSearch(searchEntry) {
 // ======================================================================================================================
 // ======================================================================================================================
 
+
 function advancedSearch() {
+  let foundElements = 0;
   const authorValue = document.getElementById("author").value.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")
   const titleValue = document.getElementById("title").value.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")
   const journalValue = document.getElementById("journal").value.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")
@@ -236,12 +291,21 @@ function advancedSearch() {
         });
         if (showRow == true) {
           row.style.display = ""
+          foundElements = foundElements + 1;
         } else {
           row.style.display = "none"
         }
       });
     });
   });
+
+  document.getElementById("entries").innerHTML = "Table entries: " + foundElements
+
+
+  //Ketil: make complete table invisible
+  //  const table = document.getElementById("book-table");
+  // tables.style.display = "none";
+
 }
 
 // ======================================================================================================================
@@ -255,13 +319,21 @@ function advancedSearch() {
 // id must be <form> for the .reset() method to work!
 function resetSearch() {
   document.getElementById("search-wrapper").reset()
-
+  let foundElements = 0
   const tables = document.getElementById("book-table");
 
   [].forEach.call(tables.tBodies, function(tbody) {
     [].forEach.call(tbody.rows, function(row) {
       row.style.display = ""
+      foundElements = foundElements + 1;
     })
+  })
+
+  document.getElementById("entries").innerHTML = "Table entries: " + foundElements
+  //reset check boxes
+  const checkBoxes = document.getElementsByClassName("checkbox");
+  [].forEach.call(checkBoxes, function(box) {
+    box.checked = null;
   })
 }
 
@@ -306,19 +378,9 @@ function buildDropDownMenus(dataset) {
   const uniqueValues = [...new Set(concatArraysKeywords)].sort()
   let optionsKeywords = "<option value='' hidden>--select--</option>"
 
-
-  // for (let i = 0; i < uniqueValues.length; i++) {
-  //   optionsKeywords += "<option value='" + uniqueValues[i] + "'>" + uniqueValues[i] + "</option>";
-  // }
-  // for-of constr
-  // for (const uniqueValue of uniqueValues) {
-  //   optionsKeywords += "<option value='" + uniqueValue + "'>" + uniqueValue + "</option>"
-  // }
-  // same but with new string concatenation
   for (const uniqueValue of uniqueValues) {
     optionsKeywords += `<option value='${uniqueValue}'>${uniqueValue}</option>`
   }
-
 
   const dropdownKeyword = document.getElementById("dropdownmenu-keyword")
   dropdownKeyword.innerHTML = optionsKeywords
@@ -333,11 +395,8 @@ function buildDropDownMenus(dataset) {
   for (let i = 0; i < concatArraysType.length; i++) {
     concatArraysType[i] = concatArraysType[i].trim()
   }
-  const uniqueValuesType = [...new Set(concatArraysType)].sort();
-  let optionsType = "<option value='' hidden>--select--</option>";
-  // for (let i = 0; i < uniqueValuesType.length; i++) {
-  //   optionsType += "<option value='" + uniqueValuesType[i] + "'>" + uniqueValuesType[i] + "</option>";
-  // }
+  const uniqueValuesType = [...new Set(concatArraysType)].sort()
+  let optionsType = "<option value='' hidden>--select--</option>"
   for (const uniqueValueType of uniqueValuesType) {
     optionsType += `<option value='${uniqueValueType}'>${uniqueValueType}</option>`
   }
@@ -354,11 +413,8 @@ function buildDropDownMenus(dataset) {
   for (let i = 0; i < concatArraysYear.length; i++) {
     concatArraysYear[i] = concatArraysYear[i].trim()
   }
-  let uniqueValuesFromYear = [...new Set(concatArraysYear)].sort();
-  let optionsFromYear = "<option value='' hidden>--select--</option>";
-  // for (let i = 0; i < uniqueValuesFromYear.length; i++) {
-  //   optionsFromYear += "<option value='" + uniqueValuesFromYear[i] + "'>" + uniqueValuesFromYear[i] + "</option>";
-  // }
+  let uniqueValuesFromYear = [...new Set(concatArraysYear)].sort()
+  let optionsFromYear = "<option value='' hidden>--select--</option>"
   for (const uniqueValueFromYear of uniqueValuesFromYear) {
     optionsFromYear += `<option value='${uniqueValueFromYear}'>${uniqueValueFromYear}</option>`
   }
@@ -373,9 +429,6 @@ function buildDropDownMenus(dataset) {
 
   let uniqueValuesToYear = [...new Set(concatArraysYear)].sort()
   let optionsToYear = "<option value='' hidden>--select--</option>"
-  // for (let i = 0; i < uniqueValuesToYear.length; i++) {
-  //   optionsToYear += "<option value='" + uniqueValuesToYear[i] + "'>" + uniqueValuesToYear[i] + "</option>"
-  // }
   for (const uniqueValueToYear of uniqueValuesToYear) {
     optionsToYear += `<option value='${uniqueValueToYear}'>${uniqueValueToYear}</option>`
   }
@@ -398,32 +451,37 @@ async function getData() {
 
   dataset.forEach(function(d) {
     className = 'showAbstractLink'
-    if (d.Abstract == ""){
-
+    if (d.Abstract == "") {
       className = ''
     }
-    d.Title_Abstract = "<p class=" + className + " onclick='expandAbstract(this)'>" + d.Title + "</p> "+ "<p  class='abstractcontent' style='display: none;'>" + d.Abstract + "</p>"
+    d.Title_Abstract = "<p class=" + className + " onclick='expandAbstract(this)'>" + d.Title + "</p> " + "<p  class='abstractcontent' style='display: none;'>" + d.Abstract + "</p>"
+    // add column with checkboxes
+    d.select = "<input type='checkbox' class='checkbox' ></input>"
 
   })
 
   buildDropDownMenus(dataset);
-
-  bookTable(dataset, ["Title", "Abstract", "Title_Abstract", "Type", "Record", "Author", "Year", "Journal", "Series", "Published", "Volume", "Pages", "Date", "Keywords", "Language", "Notes"])
-
+  //bookTable(dataset, ["select", "Title", "Abstract", "Title_Abstract", "Type", "Record", "Author", "Year", "Journal", "Series", "Published", "Volume", "Pages", "Date", "Keywords", "Language", "Notes"])
+  bookTable(dataset, columnTable)
+  document.getElementById("entries").innerHTML = "Table entries: " + dataset.length
 }
 
 getData()
 
 
-function expandAbstract(element){
-  console.log(element.nextElementSibling.style.display);
-  if (element.nextElementSibling.style.display == "")
-  {
+// ======================================================================================================================
+// ======================================================================================================================
+
+// ➡️ ➡️ ➡️ CHECKBOX FUNCTION ⬅️ ⬅️ ⬅️
+
+// ======================================================================================================================
+// ======================================================================================================================
+
+
+function expandAbstract(element) {
+  if (element.nextElementSibling.style.display == "") {
     element.nextElementSibling.style.display = "none";
   } else {
     element.nextElementSibling.style.display = "";
   }
-  console.log(element.nextElementSibling.style.display);
-
-
 }

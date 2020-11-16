@@ -52,7 +52,7 @@ h6 {
 
 #search-wrapper {
   width: 13rem;
-  height: 32rem;
+  height: 40rem;
   display: flex;
   flex-direction: column;
   margin: 2rem 1rem 2rem 1rem;
@@ -103,15 +103,15 @@ input[type=text] {
 
 #reset-button {
   /* margin: auto; */
-  width: 5.2rem;
+  width: 6.5rem;
   height: 1.8rem;
   margin: 0 1rem 1rem 0.5rem;
   background: hsl(0, 0%, 83%);
   border: 1px solid hsl(200, 80%, 35%);
   /* box-shadow: 2px 2px 0 hsl(200, 80%, 35%); */
   border-radius: 4px;
-  padding: 5px 0 2px 0;
-  font-family: "Josefin Sans";
+  padding: 5px 0 5px 0;
+  font-family: "ABeeZee", sans-serif;
   font-size: 0.8rem;
   font-weight: bold;
   color: hsl(200, 80%, 35%);
@@ -122,20 +122,34 @@ input[type=text] {
   background: hsl(208, 52%, 60%);
 }
 
+#print {
+  /* margin: auto; */
+  width: 6.5rem;
+  height: 1.8rem;
+  margin: 0 1rem 1rem 0.5rem;
+  background: hsl(0, 0%, 83%);
+  border: 1px solid hsl(200, 80%, 35%);
+  /* box-shadow: 2px 2px 0 hsl(200, 80%, 35%); */
+  border-radius: 4px;
+  padding: 5px 0 5px 0;
+  font-family: "ABeeZee", sans-serif;
+  font-size: 0.8rem;
+  font-weight: bold;
+  color: hsl(200, 80%, 35%);
+  cursor: pointer;
+}
+
+#entries {
+  margin: 2rem 1rem 0.5rem 0.5rem;
+  font-family: "ABeeZee", sans-serif;
+  font-size: 0.8rem;
+  color: hsl(200, 80%, 20%);
+}
+
 table {
   border-collapse: collapse;
   width: 100%;
   font-family: "ABeeZee", sans-serif;
-}
-
-th {
-  font-size: 0.8rem;
-  text-align: left;
-  vertical-align: middle;
-  text-transform: uppercase;
-  background: hsl(200, 20%, 90%);
-  color: hsl(209, 86%, 20%);
-  padding: 0.2rem;
 }
 
 #table-wrapper {
@@ -145,16 +159,33 @@ th {
   border: 1px solid hsl(200, 30%, 70%);
 }
 
-#table-wrapper th {
+th {
   position: sticky;
   top: 0;
+  font-size: 0.8rem;
+  text-align: left;
+  vertical-align: middle;
+  text-transform: uppercase;
+  background: hsl(200, 20%, 90%);
+  color: hsl(209, 86%, 20%);
+  padding: 0.2rem;
 }
 
-th {
+th:nth-child(4),
+th:nth-child(5),
+th:nth-child(6),
+th:nth-child(7),
+th:nth-child(8) {
   cursor: pointer;
 }
 
-td:nth-child(3) {
+/* , 5, 6, 7 */
+
+/* th:nth-child(n+1):nth-child(-n+15) {
+  border-right: 1px solid;
+} */
+
+td:nth-child(1) {
   border-left: none;
 }
 

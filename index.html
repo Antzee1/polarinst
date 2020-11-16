@@ -51,9 +51,13 @@
 
       <!-- ➡️ ➡️ ➡️ RESET BUTTON ⬅️ ⬅️ ⬅️ -->
 
-      <input type="button" onclick="resetSearch()" id="reset-button" value="RESET ALL"></input>
-
+      <input type="button" onclick="resetSearch()" id="reset-button" value="RESET SEARCH"></input>
+      <p id="entries"></p>
+      <input type="button" onclick="printTable()" id="print" value="Print selected"></input>
     </form>
+
+
+
 
     <div id="table-wrapper">
       <!-- table gets added here with D3.js -->
