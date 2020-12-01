@@ -15,7 +15,14 @@
 
 // https://stackoverflow.com/questions/15121690/d3-seems-to-assume-i-know-the-column-names-of-a-csv
 
-const columnTable = ["select", "Title", "Abstract", "Type", "Author", "Year", "Title_Abstract", "Journal", "Series", "Published", "Volume", "Pages", "Date", "Keywords", "Language", "Notes"]
+const columnIdentifier = {
+  "Select":{"className":"select","headerName":"Select","fnutt":"","display":"","print":false},
+  "Title":{"className":"title","headerName":"Title","fnutt":"▼▲","display":"none","print":true},
+
+}
+
+
+const columnTable = ["Select", "Title", "Abstract", "Type", "Author", "Year", "Title_Abstract", "Journal", "Series", "Published", "Volume", "Pages", "Date", "Keywords", "Language", "Notes"]
 const printColumns = ["Title", "Abstract", "Type", "Record", "Author", "Year", "Journal", "Series", "Published", "Volume", "Pages", "Date", "Keywords", "Language", "Notes"]
 
 function bookTable(dataset, columns) {
@@ -44,10 +51,6 @@ function bookTable(dataset, columns) {
       column.toLowerCase()
     )
     .text((column) => column
-
-
-
-
   )
     .on("click", function(d) { // sortere kolonner ascending/descending
 
@@ -454,14 +457,15 @@ async function getData() {
     if (d.Abstract == "") {
       className = ''
     }
-    d.Title_Abstract = "<p class=" + className + " onclick='expandAbstract(this)'>" + d.Title + "</p> " + "<p  class='abstractcontent' style='display: none;'>" + d.Abstract + "</p>"
+    d["Title_Abstract"] = "<p class=" + className + " onclick='expandAbstract(this)'>" + d.Title + "</p> " + "<p  class='abstractcontent' style='display: none;'>" + d.Abstract + "</p>"
+
     // add column with checkboxes
-    d.select = "<input type='checkbox' class='checkbox' ></input>"
 
+    d["Select"] = "<input type='checkbox' class='checkbox' ></input>"
   })
-
+  console.log(dataset);
   buildDropDownMenus(dataset);
-  //bookTable(dataset, ["select", "Title", "Abstract", "Title_Abstract", "Type", "Record", "Author", "Year", "Journal", "Series", "Published", "Volume", "Pages", "Date", "Keywords", "Language", "Notes"])
+  //bookTable(dataset, ["Select", "Title", "Abstract", "Title_Abstract", "Type", "Record", "Author", "Year", "Journal", "Series", "Published", "Volume", "Pages", "Date", "Keywords", "Language", "Notes"])
   bookTable(dataset, columnTable)
   document.getElementById("entries").innerHTML = "Table entries: " + dataset.length
 }
